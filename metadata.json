@@ -1,0 +1,6 @@
+{
+  "name": "Odoo 18",
+  "description": "Odoo 18 oficial con soporte para wkhtmltopdf y compatible con EasyPanel.",
+  "port": 8069
+}
+

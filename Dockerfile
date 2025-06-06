@@ -22,7 +22,12 @@ RUN apt-get update && apt-get install -y \
     unzip \
     && apt-get clean
     
-RUN useradd -m odoo
+RUN useradd -m -d /opt/odoo -U -r -s /bin/bash odoo
+
+# Cambiá permisos de las carpetas necesarias
+RUN chown -R odoo:odoo /opt/odoo
+
+# Cambiá al usuario odoo
 USER odoo
 # Crear carpeta para Odoo
 WORKDIR /opt/odoo

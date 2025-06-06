@@ -27,8 +27,6 @@ RUN mkdir -p /opt/odoo/custom_addons /var/lib/odoo && \
     useradd -m -d /opt/odoo -U -r -s /bin/bash odoo && \
     chown -R odoo:odoo /opt/odoo /var/lib/odoo
 
-# Cambiar a usuario odoo
-USER odoo
 
 # Definir directorio de trabajo
 WORKDIR /opt/odoo

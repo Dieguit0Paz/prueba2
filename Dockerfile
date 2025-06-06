@@ -23,7 +23,7 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean
 
 # Crear carpeta base para Odoo y el usuario
-RUN mkdir -p /opt/odoo/app /opt/odoo/custom_addons /var/lib/odoo && \
+RUN mkdir -p /opt/odoo/custom_addons /var/lib/odoo && \
     useradd -m -d /opt/odoo -U -r -s /bin/bash odoo && \
     chown -R odoo:odoo /opt/odoo /var/lib/odoo
 

@@ -15,8 +15,8 @@ db_user = ${DB_USER}
 db_password = ${DB_PASSWORD}
 log_level = info
 log_level = info
-web.base.url = ${WEB.BASE.URL}
-database.expiration_date = ${DATABASE.EXPIRATION_DATE}
+web.base.url = ${WEBBASEURL}
+database.expiration_date = ${DATABASEEXPIRATION_DATE}
 EOF
 fi
 

@@ -7,14 +7,16 @@ source /opt/odoo/app/venv/bin/activate
 if [ ! -f /opt/odoo/app/odoo.conf ]; then
   cat > /opt/odoo/app/odoo.conf <<EOF
 [options]
-addons_path = addons
+addons_path = ${ADDONS_PATH}
 admin_passwd = ${ADMIN_PASSWORD}
 db_host = ${DB_HOST}
 db_port = ${DB_PORT}
 db_user = ${DB_USER}
 db_password = ${DB_PASSWORD}
 log_level = info
-logfile = /opt/odoo/app/odoo.log
+log_level = info
+web.base.url = ${WEB.BASE.URL}
+database.expiration_date = ${DATABASE.EXPIRATION_DATE}
 EOF
 fi
 

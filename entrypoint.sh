@@ -1,3 +1,6 @@
+#!/bin/bash
+source venv/bin/activate
+
 exec python odoo-bin \
     -c odoo.conf \
     --db_host=${DB_HOST} \

@@ -4,6 +4,7 @@ FROM python:3.10-slim
 # Instalar dependencias del sistema
 RUN apt-get update && apt-get install -y \
     git \
+    wkhtmltopdf \
     gcc \
     g++ \
     libxml2-dev \
@@ -20,7 +21,9 @@ RUN apt-get update && apt-get install -y \
     curl \
     unzip \
     && apt-get clean
-
+    
+RUN useradd -m odoo
+USER odoo
 # Crear carpeta para Odoo
 WORKDIR /opt/odoo
 

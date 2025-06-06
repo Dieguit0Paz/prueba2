@@ -1,4 +1,4 @@
-# Imagen base de Python
+# Imagen base
 FROM python:3.10-slim
 
 # Instalar dependencias del sistema
@@ -22,23 +22,23 @@ RUN apt-get update && apt-get install -y \
     unzip \
     && apt-get clean
 
-# Crear carpeta base para Odoo y el usuario
+# Crear usuario odoo y carpetas necesarias
 RUN mkdir -p /opt/odoo/custom_addons /var/lib/odoo && \
     useradd -m -d /opt/odoo -U -r -s /bin/bash odoo && \
     chown -R odoo:odoo /opt/odoo /var/lib/odoo
 
-# Copiar el script de arranque y dar permisos de ejecución
-COPY entrypoint.sh /opt/odoo/app/entrypoint.sh
-RUN chmod +x /opt/odoo/app/entrypoint.sh
-
 # Cambiar a usuario odoo
 USER odoo
 
-# Directorio de trabajo del proyecto
+# Definir directorio de trabajo
 WORKDIR /opt/odoo
 
-# Clonar tu repositorio en carpeta interna
+# Clonar repositorio del proyecto (esto crea /opt/odoo/app)
 RUN git clone https://github.com/Dieguit0Paz/prueba2.git app
+
+# Copiar script de arranque (después de clonar el repo)
+COPY --chown=odoo:odoo entrypoint.sh /opt/odoo/app/entrypoint.sh
+RUN chmod +x /opt/odoo/app/entrypoint.sh
 
 # Crear entorno virtual e instalar dependencias
 WORKDIR /opt/odoo/app
@@ -47,11 +47,11 @@ RUN python -m venv venv && \
     pip install --upgrade pip && \
     pip install -r requirements.txt
 
-# Exponer el puerto por defecto de Odoo
+# Exponer puerto de Odoo
 EXPOSE 8069
 
-# Declarar volúmenes persistentes
+# Volúmenes persistentes
 VOLUME ["/var/lib/odoo", "/opt/odoo/custom_addons"]
 
-# Comando de inicio
+# Ejecutar script de arranque
 ENTRYPOINT ["/opt/odoo/app/entrypoint.sh"]

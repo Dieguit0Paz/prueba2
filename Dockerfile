@@ -21,35 +21,37 @@ RUN apt-get update && apt-get install -y \
     curl \
     unzip \
     && apt-get clean
-    
-RUN useradd -m -d /opt/odoo -U -r -s /bin/bash odoo
 
-# Cambiá permisos de las carpetas necesarias
-RUN chown -R odoo:odoo /opt/odoo
+# Crear carpeta base para Odoo y el usuario
+RUN mkdir -p /opt/odoo/app /opt/odoo/custom_addons /var/lib/odoo && \
+    useradd -m -d /opt/odoo -U -r -s /bin/bash odoo && \
+    chown -R odoo:odoo /opt/odoo /var/lib/odoo
 
-# Cambiá al usuario odoo
+# Copiar el script de arranque y dar permisos de ejecución
+COPY entrypoint.sh /opt/odoo/app/entrypoint.sh
+RUN chmod +x /opt/odoo/app/entrypoint.sh
+
+# Cambiar a usuario odoo
 USER odoo
-# Crear carpeta para Odoo
+
+# Directorio de trabajo del proyecto
 WORKDIR /opt/odoo
 
-# Clonar tu repositorio en una carpeta interna
+# Clonar tu repositorio en carpeta interna
 RUN git clone https://github.com/Dieguit0Paz/prueba2.git app
 
-# Cambiar al directorio de tu proyecto
-WORKDIR /opt/odoo/app
-
 # Crear entorno virtual e instalar dependencias
+WORKDIR /opt/odoo/app
 RUN python -m venv venv && \
     . venv/bin/activate && \
     pip install --upgrade pip && \
     pip install -r requirements.txt
 
-# Copiar el script de arranque
-COPY entrypoint.sh /opt/odoo/app/entrypoint.sh
-RUN chmod +x /opt/odoo/app/entrypoint.sh
-
 # Exponer el puerto por defecto de Odoo
 EXPOSE 8069
+
+# Declarar volúmenes persistentes
+VOLUME ["/var/lib/odoo", "/opt/odoo/custom_addons"]
 
 # Comando de inicio
 ENTRYPOINT ["/opt/odoo/app/entrypoint.sh"]

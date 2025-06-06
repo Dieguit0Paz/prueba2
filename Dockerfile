@@ -43,7 +43,8 @@ WORKDIR /opt/odoo/app
 RUN python -m venv venv && \
     . venv/bin/activate && \
     pip install --upgrade pip && \
-    pip install -r requirements.txt
+    pip install -r requirements.txt && \
+    pip install pdfminer
 
 # Exponer puerto de Odoo
 EXPOSE 8069

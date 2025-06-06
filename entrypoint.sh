@@ -16,6 +16,7 @@ db_password = ${DB_PASSWORD}
 log_level = info
 web.base.url = ${WEBBASEURL}
 database.expiration_date = ${DATABASEEXPIRATION_DATE}
+data_dir = ${ODOO_DATA_DIR}
 EOF
 fi
 

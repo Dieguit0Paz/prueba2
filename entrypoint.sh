@@ -17,6 +17,7 @@ log_level = info
 web.base.url = ${WEBBASEURL}
 database.expiration_date = ${DATABASEEXPIRATION_DATE}
 data_dir = ${ODOO_DATA_DIR}
+proxy_mode = ${PROXY_MODE}
 EOF
 fi
 
